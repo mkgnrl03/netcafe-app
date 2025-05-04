@@ -1,75 +1,51 @@
-# Nuxt Minimal Starter
+# NetCafe-App 
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## How to run this application?
 
-## Setup
 
-Make sure to install dependencies:
+### Clone Repository
 
 ```bash
-# npm
-npm install
 
-# pnpm
+git clone https://github.com/mkgnrl03/netcafe-app.git
+cd netcafe-app
+
+# Make sure to install dependencies
 pnpm install
 
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+### Imoprtant Step
 
-Start the development server on `http://localhost:3000`:
+Before running this application, make sure install the Tauri prerequisites here: `https://v2.tauri.app/start/prerequisites/`
+
+
+### Install Rust
+If you haven't installed Rust yet, you can do so with the following command:
 
 ```bash
-# npm
-npm run dev
 
-# pnpm
-pnpm dev
+# Linux and macOS
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 
-# yarn
-yarn dev
+# Windows
+winget install --id Rustlang.Rustup
 
-# bun
-bun run dev
+
+# Checked if correct toolchain is installed
+rustup default stable-msvc
+
 ```
 
-## Production
 
-Build the application for production:
+### Build and Run 
 
 ```bash
-# npm
-npm run build
 
-# pnpm
-pnpm build
+# build the app 
+pnpm nuxi generate
 
-# yarn
-yarn build
+# Run with tauri command (local)
+pnpm tauri dev
 
-# bun
-bun run build
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
