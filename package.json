@@ -13,8 +13,10 @@
     "@tailwindcss/vite": "^4.1.5",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
+    "lucide-react": "^0.507.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router": "^7.5.3",
     "react-timer-hook": "^4.0.5",
     "tailwindcss": "^4.1.5",
     "tauri-plugin-serialplugin": "^2.11.0"

@@ -1,63 +1,29 @@
-import { useEffect, useState } from "react";
-import NCTimer from "./components/NCTimer";
-import { PortInfo, SerialPort } from "tauri-plugin-serialplugin";
+import { AuthContextProvider } from "./context/AuthContext"
+import { BrowserRouter, Route, Routes } from 'react-router'
+import AuthLayout from "./layouts/AuthLayout"
+import LoginPage from "./pages/auth/LoginPage"
+import ProtectedLayout from "./layouts/ProtectedLayout"
+import HomePage from "./pages/protected/HomePage"
+import TimerPage from "./pages/client/TimerPage"
 
-type PortOptions = {
-  name: string,
-  value: string
-}
-
-export default function App() { 
-  const [serialPorts, setSerialPorts] = useState<{[key: string]: PortInfo} | null>(null)
-  const [portOptions, setPortOptions] = useState<PortOptions[]>([])
-  const [selectedPort, setSelectedPort] = useState<string>("")
-
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 60)
-
-  useEffect(() => {
-    SerialPort.available_ports().then((ports) => {
-      setSerialPorts(ports)
-    })
-  }, [])
-
-  useEffect(() => {
-    if(serialPorts){
-      setPortOptions(Object.keys(serialPorts).map((port) => ({
-          name: port,
-          value: port
-        })
-      ))
-      setSelectedPort('')
-    }
-  }, [serialPorts])
-
+export default function App() {
   return (
-    <div className='p-4 font-sans bg-gray-950 text-white w-full h-dvh'>
-      <main className="h-full max-w-5xl m-auto flex flex-col gap-6 items-center justify-center">
-        <h1 className="text-center font-bold text-2xl tracking-wider">
-          NetCafe
-        </h1>
-        <NCTimer expiryTimestamp={time}/>
+    <AuthContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<TimerPage />} />
+          
+          {/* Unprotected Routes */}
+          <Route path="session" element={<AuthLayout />}>
+            <Route index element={<LoginPage />} />
+          </Route>
 
-        <h1>Selected Port: {selectedPort}</h1>
-
-        <select 
-          name="selectedSerialPort"
-          value={selectedPort}
-          onChange={e => setSelectedPort(e.target.value)}
-        >
-          <option disabled>Please select one</option>
-          <option value="COM1">COM1</option>
-         {
-           portOptions.map((port) => 
-            <option value={port.value}>
-              {port.name}
-            </option>
-          )
-         }
-        </select>
-      </main>
-    </div>
+          {/* Protected Routes */}
+          <Route path="admin" element={<ProtectedLayout />}>
+             <Route index element={<HomePage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthContextProvider>
   )
 }
